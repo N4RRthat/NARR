@@ -76,7 +76,7 @@ http://www.tooplate.com/view/2110-character
                         Contact Us
                     </h2>
                 </header>
-                <form action="index.html" class="tm-contact-form" method="POST">
+                <form class="tm-contact-form" method="POST">
                     <div class="tm-form-group">
                         <input type="text" id="contact_name" name="contact_name" class="form-control" placeholder="Name" required/>
                     </div>
@@ -92,15 +92,7 @@ http://www.tooplate.com/view/2110-character
                 </form>
             </div>
 
-            <div class="tm-form-section-tag">
-                <div class="tm-bg-secondary tm-text-white tm-block-pad tm-form-section-tag-inner">
-                    <header>
-                        <h2>Proin imperdiet commodo nisi</h2>
-                    </header>
-                    <p>Mauris sodales vulputate ante a dapibus Donec vitae maximus dolor, pharetra imperdiet lectus. Praesent
-                        pharetra elit ac est congue volutpat.</p>
-                </div>
-            </div>
+    
         </div>
 
     </main>
@@ -201,6 +193,47 @@ http://www.tooplate.com/view/2110-character
             adjustLayout();
         })
     </script>
+    </script>
+    
+    <script>
+        // mailto를 사용한 Contact Form 스크립트
+        const RECIPIENT_EMAIL = 'n4rrthat@gmail.com';
+
+        $(function() {
+            $('.tm-contact-form').on('submit', function(e) {
+                e.preventDefault();
+                
+                const name = $('#contact_name').val().trim();
+                const email = $('#contact_email').val().trim();
+                const message = $('#contact_message').val().trim();
+                
+                if (!name || !email || !message) {
+                    alert('모든 필드를 입력해주세요.');
+                    return;
+                }
+                
+                const subject = encodeURIComponent(`[NARR 문의] ${name}님의 메시지`);
+                const body = encodeURIComponent(
+                    `보낸 사람: ${name}\n` +
+                    `이메일: ${email}\n` +
+                    `\n━━━━━━━━━━━━━━━━━━━━━━\n\n` +
+                    `${message}\n\n` +
+                    `━━━━━━━━━━━━━━━━━━━━━━\n` +
+                    `이 메시지는 NARR 웹사이트 Contact Form을 통해 전송되었습니다.`
+                );
+                
+                window.location.href = `mailto:${RECIPIENT_EMAIL}?subject=${subject}&body=${body}`;
+                
+                setTimeout(function() {
+                    if (confirm('메시지가 작성되었습니다. 폼을 초기화하시겠습니까?')) {
+                        $('.tm-contact-form')[0].reset();
+                    }
+                }, 1000);
+            });
+        });
+    </script>
+</body>
+</html>
 </body>
 
 </html>
